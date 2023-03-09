@@ -17,7 +17,7 @@ func main() {
 		FullTimestamp: true,
 	})
 
-	client := atem.NewClient(log, "172.22.26.50")
+	client := atem.NewClient(log, "192.168.1.156")
 
 	ctx, cancel := context.WithCancel(context.Background())
 	defer cancel()
@@ -28,7 +28,8 @@ func main() {
 	}
 	log.Info("Connected")
 
-	stateSer, _ := json.MarshalIndent(client.State(), "", "  ")
+	//stateSer, _ := json.MarshalIndent(client.State(), "", "  ")
+	stateSer, _ := json.MarshalIndent(client.State().SuperSource, "", "  ")
 	fmt.Printf("State:\n%s\n", string(stateSer))
 
 	// allow for some packets to come in

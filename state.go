@@ -1,6 +1,9 @@
 package atem
 
-import "github.com/mraerino/atem-go/models"
+import (
+	"github.com/mraerino/atem-go/models"
+	"github.com/mraerino/atem-go/packet/cmds"
+)
 
 type Characteristics struct {
 	ProductName   string
@@ -36,6 +39,8 @@ type SwitcherState struct {
 	MediaFiles  map[int]models.MediaStillFrame
 
 	TimeCodeLastChange models.Timecode
+
+	SuperSource models.SuperSourceBoxes
 }
 
 func NewSwitcherState() SwitcherState {
@@ -50,5 +55,23 @@ func NewSwitcherState() SwitcherState {
 
 		MediaPlayer: make(map[int]*models.MediaPlayer),
 		MediaFiles:  make(map[int]models.MediaStillFrame),
+		SuperSource: make(models.SuperSourceBoxes),
+	}
+}
+
+func FromCommand(cmd cmds.SSBPCmd) models.SuperSourceBoxState {
+	return models.SuperSourceBoxState{
+		Flag:       cmd.Flag,
+		BoxId:      cmd.BoxId,
+		Enabled:    cmd.Enabled,
+		Source:     cmd.Source,
+		X:          cmd.X,
+		Y:          cmd.Y,
+		Size:       cmd.Size,
+		Cropped:    cmd.Cropped,
+		CropTop:    cmd.CropTop,
+		CropBottom: cmd.CropBottom,
+		CropLeft:   cmd.CropLeft,
+		CropRight:  cmd.CropRight,
 	}
 }

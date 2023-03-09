@@ -251,6 +251,8 @@ func (c *Client) processCommands(log logrus.FieldLogger, msg packet.Message) (in
 			c.state.Config.MultiViews = int(*t)
 		case *cmds.SscCmd:
 			c.state.Config.SuperSources = int(*t)
+		case *cmds.SSBPCmd:
+			c.state.SuperSource[int(t.BoxId)] = FromCommand(*t)
 		case *cmds.TlcCmd:
 			c.state.Config.TallyChannels = int(*t)
 		case *cmds.MacCmd:
